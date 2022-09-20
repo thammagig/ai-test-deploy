@@ -1,6 +1,14 @@
-import streamlit as st
-import pandas as pd
+#Library imports
 import numpy as np
+import streamlit as st
+import cv2
+from keras.models import load_model
+
+#import joblib
+from keras.preprocessing import image
+from io import BytesIO
+from tensorflow.keras.applications import resnet50
+
 
 df = pd.DataFrame({
     'first column': [1, 2, 3, 4],
@@ -10,17 +18,5 @@ df = pd.DataFrame({
 st.write("Here's our first attempt at using data to create a table:")
 st.write(df)
 
+st.write("555555")
 
-
-
-chart_data = pd.DataFrame(
-        np.random.randn(20, 3),
-        columns=['a', 'b', 'c'])
-
-st.line_chart(chart_data)
-
-map_data = pd.DataFrame(
-        np.random.randn(1000, 2) / [50, 50] + [19.027695761743225, 99.89943603581405], 
-        columns=['lat', 'lon'])
-
-st.map(map_data)
