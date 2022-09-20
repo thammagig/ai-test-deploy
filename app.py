@@ -1,22 +1,39 @@
-#Library imports
-import numpy as np
+from fastai.vision.widgets import *
+from fastai.vision.all import *
+
+from pathlib import Path
+
 import streamlit as st
-import cv2
-from keras.models import load_model
 
-#import joblib
-from keras.preprocessing import image
-from io import BytesIO
-from tensorflow.keras.applications import resnet50
+class Predict:
+    def __init__(self, filename):
+        self.learn_inference = load_learner(Path()/filename)
+        self.img = self.get_image_from_upload()
+        if self.img is not None:
+            self.display_output()
+            self.get_prediction()
+    
+    @staticmethod
+    def get_image_from_upload():
+        uploaded_file = st.file_uploader("Upload Files",type=['png','jpeg', 'jpg'])
+        if uploaded_file is not None:
+            return PILImage.create((uploaded_file))
+        return None
 
+    def display_output(self):
+        st.image(self.img.to_thumb(500,500), caption='Uploaded Image')
 
-df = pd.DataFrame({
-    'first column': [1, 2, 3, 4],
-    'second column': [10, 20, 30, 40]
-})
+    def get_prediction(self):
 
-st.write("Here's our first attempt at using data to create a table:")
-st.write(df)
+        if st.button('Classify'):
+            pred, pred_idx, probs = self.learn_inference.predict(self.img)
+            st.write(f'Prediction: {pred}; Probability: {probs[pred_idx]:.04f}')
+        else: 
+            st.write(f'Click the button to classify') 
 
-st.write("555555")
+if __name__=='__main__':
+
+    file_name='dog.pkl'
+
+    predictor = Predict(file_name)
 
