@@ -42,7 +42,7 @@ class Predict:
 
 if __name__=='__main__':
 
-    file_name='d3_resnet18.pkl'
+    file_name='dog2.pkl'
 
     predictor = Predict(file_name)
 
