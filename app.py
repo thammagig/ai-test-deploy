@@ -42,7 +42,7 @@ class Predict:
 
 if __name__=='__main__':
 
-    file_name='dog2.pkl'
+    file_name='dbc_resnet18_fastai.pkl'
 
     predictor = Predict(file_name)
 
